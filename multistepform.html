@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-Step Form - Steps 1 to 9</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init({
+                publicKey: "O5-SGcpWiZJkDZN3k",
+            });
+        })();
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 250px;
+        }
+
+        .progress-bar-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 250px;
+            background: #c0bebe;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 11%;
+            background: #043034;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .subtext {
+            font-size: 14px;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-size: 36px;
+            font-weight: bolder;
+            margin-bottom: 25px;
+            line-height: 80px;
+        }
+
+        .btn-group,
+        .input-group {
+            width: 450px;
+            margin: 0 auto 20px auto;
+        }
+
+        .btn-group button,
+        .btn-submit {
+            width: 100%;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+            margin: 5px 0;
+            transition: 0.2s ease;
+        }
+
+        .btn-continue {
+            background: #043034;
+            color: #fff;
+            padding: 16px 30px;
+            font-size: 16px;
+            border-radius: 24px;
+            border: 2px solid #043034;
+        }
+
+        .btn-group button:hover,
+        .btn-submit:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-group .selected {
+            background: #043034;
+            color: #fff;
+            border-color: #043034;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            outline: none;
+        }
+
+        .input-group select {
+            width: 48%;
+            /* Adjusted width for the select dropdown */
+            margin-right: 4%;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #043034;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #043034;
+            background: #043034;
+            font-weight: bold;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 24px;
+        }
+
+        .trustpilot {
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        .stars {
+            color: #043034;
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .disclaimer {
+            font-size: 8px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background-color: #ff3b3b;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        /* Popup styles for success message */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #043034;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+            z-index: 999;
+            text-align: center;
+        }
+
+        .popup button {
+            background-color: white;
+            color: #043034;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .popup button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            outline: none;
+            text-align: left;
+            /* Align text to the left when user types */
+            color: #000;
+            /* Set text color to black */
+            direction: ltr;
+            /* Ensure text starts from the left when typing */
+        }
+
+        /* Align placeholder text to the right */
+        .input-group input::placeholder {
+            text-align: right;
+            /* Align placeholder text to the right */
+            color: #000;
+            /* Set placeholder text color to black */
+        }
+
+        .choice-btn {
+            padding: 50px 40px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+            margin: 5px 0;
+            transition: 0.2s ease;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+
+            label {
+                font-size: 24px;
+                line-height: 40px;
+            }
+
+            .btn-group button,
+            .btn-submit {
+                font-size: 14px;
+                padding: 15px;
+            }
+
+            .input-group input,
+            .input-group select {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .progress-bar-wrapper {
+                width: 100%;
+            }
+
+            .trustpilot {
+                font-size: 12px;
+            }
+
+            footer {
+                font-size: 10px;
+            }
+
+            .choice-btn {
+                padding: 30px 25px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                width: 80%;
+            }
+
+            .progress-bar-wrapper {
+                width: 100%;
+            }
+
+            label {
+                font-size: 20px;
+                line-height: 30px;
+            }
+
+            .btn-group button,
+            .btn-submit {
+                font-size: 12px;
+                padding: 12px;
+            }
+
+            .input-group input,
+            .input-group select {
+                font-size: 12px;
+                padding: 15px;
+                width: 86%;
+            }
+
+            .trustpilot {
+                font-size: 10px;
+            }
+
+            footer {
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Error Message Box -->
+    <div id="errorMessage" class="error-message">Please fill out all required fields.</div>
+
+    <!-- Success Popup Message -->
+    <div id="successPopup" class="popup">
+        Congratulations! Your form has been submitted successfully.
+        <br />
+        <button onclick="reloadPage()">OK</button>
+    </div>
+
+    <div class="form-container">
+        <button class="back-button" id="backBtn" onclick="goBack()">← </button>
+        <div class="logo"><img
+                src="https://mfabrico.softvenceomega.com/wp-content/uploads/2025/03/Screenshot-2024-10-23-at-5.22.55%E2%80%AFPM-1.png"
+                alt="Logo"></div>
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+        </div>
+        <div class="subtext">Only takes 2 minutes</div>
+
+        <!-- Wrap the form fields inside a <form> tag -->
+        <form id="multiStepForm" action="" method="post">
+            <div id="steps">
+                <div class="form-step active" id="step1">
+                    <label>What type of business do you own?</label>
+                    <div class="btn-group" id="bizBtns"></div>
+                </div>
+                <div class="form-step" id="step2">
+                    <label>How much money do you need?</label>
+                    <div class="input-group"><input type="number" name="money_needed" placeholder="USD" required></div>
+                    <button type="button" class="btn-continue" onclick="nextStep()">Continue</button>
+                </div>
+                <div class="form-step" id="step3">
+                    <label>What was your revenue last month?</label>
+                    <div class="input-group"><input type="number" name="revenue_last_month" placeholder="USD" required>
+                    </div>
+                    <button type="button" class="btn-continue" onclick="nextStep()">Continue</button>
+                </div>
+                <div class="form-step" id="step4">
+                    <label>When did you start your business?</label>
+                    <div class="input-group" style="display: flex;">
+                        <select name="start_month" required id="monthSelect">
+                            <option value="">Select Month</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+
+                            <!-- Other options go here -->
+                        </select>
+                        <select name="start_year" required id="yearSelect">
+                            <option value="">Select Year</option>
+                            <option value="2010">2010</option>
+                            <option value="2011">2011</option>
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+
+                            <!-- Other options go here -->
+                        </select>
+                    </div>
+                    <button type="button" class="btn-continue" onclick="nextStep()">Continue</button>
+                </div>
+                <div class="form-step" id="step5">
+                    <label>Do you have a business checking account?</label>
+                    <div class="" style="display: flex; gap: 5px; align-items: center; justify-content: center;">
+                        <button type="button" class="choice-btn" onclick="nextStep()">Yes</button>
+                        <button type="button" class="choice-btn" onclick="nextStep()">No</button>
+                    </div>
+                </div>
+                <div class="form-step" id="step6">
+                    <label>What is your Company's Name?</label>
+                    <div class="input-group"><input type="text" name="company_name" required></div>
+                    <button type="button" class="btn-continue" onclick="nextStep()">Continue</button>
+                </div>
+                <div class="form-step" id="step7">
+                    <label>What is your Email?</label>
+                    <div class="input-group"><input type="email" name="email" required></div>
+                    <button type="button" class="btn-continue" onclick="nextStep()">Continue</button>
+                </div>
+                <div class="form-step" id="step8">
+                    <label>What is your mobile phone number?</label>
+                    <div class="input-group"><input type="tel" name="phone" required></div>
+                    <button type="button" class="btn-continue" onclick="nextStep()">Continue</button>
+                </div>
+                <div class="form-step" id="step9">
+                    <label>What is your Full Name?</label>
+                    <div class="input-group"><input type="text" name="full_name" required></div>
+                    <button type="button" class="btn-continue" onclick="submitForm()">Continue</button>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="trustpilot"><span style="font-size: 18px; font-weight: 500;">Excellent</span> <span
+                class="stars">★★★★★</span> Lendivate</div>
+        <footer>
+            <p>&copy;2025. All rights reserved.<br>Offering terms of at least 90 days.</p>
+            <p><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a></p>
+            <p>3390 Mary Street Suite 310<br>Miami, Florida 33133</p>
+        </footer>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 9;
+        const progressBar = document.getElementById('progressBar');
+        const backBtn = document.getElementById('backBtn');
+        const errorMessage = document.getElementById('errorMessage'); // Error message element
+        const successPopup = document.getElementById('successPopup'); // Success popup element
+
+        const bizOptions = ["Sole Proprietorship", "Partnership", "Limited Liability Company (LLC)", "C Corporation", "S Corporation"];
+        const bizBtns = document.getElementById("bizBtns");
+        bizOptions.forEach(text => {
+            const btn = document.createElement("button");
+            btn.textContent = text;
+            btn.onclick = () => { btn.classList.add('selected'); nextStep(); };
+            bizBtns.appendChild(btn);
+        });
+
+        // Function to proceed to the next step in the form
+        function nextStep() {
+            // Validate required fields
+            const requiredFields = document.querySelectorAll(`#step${currentStep} [required]`);
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                errorMessage.style.display = 'block'; // Show error message
+                setTimeout(() => errorMessage.style.display = 'none', 3000); // Hide error message after 3 seconds
+                return;
+            }
+
+            if (currentStep < totalSteps) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep++;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                backBtn.style.display = currentStep > 1 ? 'block' : 'none';
+                progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            }
+        }
+
+        // Function to go back to the previous step
+        function goBack() {
+            if (currentStep > 1) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep--;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                backBtn.style.display = currentStep > 1 ? 'block' : 'none';
+                progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            }
+        }
+
+        // Submit form data via EmailJS
+        function submitForm() {
+            const formData = new FormData(document.getElementById('multiStepForm'));
+            const data = {
+                full_name: formData.get('full_name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                company_name: formData.get('company_name'),
+                money_needed: formData.get('money_needed'),
+                revenue_last_month: formData.get('revenue_last_month'),
+                start_month: formData.get('start_month'),
+                start_year: formData.get('start_year'),
+                has_business_account: formData.get('has_business_account')
+            };
+
+            emailjs.send('service_97u2nxs', 'template_ek2em98', data)
+                .then(function (response) {
+                    console.log("SUCCESS", response);
+                    // Show success popup
+                    successPopup.style.display = 'block';
+                    document.getElementById('multiStepForm').style.display = 'none';
+                }, function (error) {
+                    console.log("FAILED", error);
+                    alert("There was an error submitting the form.");
+                });
+        }
+
+        // Reload the page to reset the form
+        function reloadPage() {
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>

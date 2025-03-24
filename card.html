@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Cards</title>
+    <style>
+        /* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    background-color: #000000;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    gap: 50px;
+}
+
+/* Quote Card */
+.quote-card {
+    background-color: #1c1c1c;
+    border: 1px solid yellow;
+    padding: 20px;
+    position: relative;
+    width: 600px;
+    height: 400px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Quote Icons */
+
+.quote-icon-right {
+    font-size: 200px;
+    color: yellow;
+    background-color: #000000;
+    width: 100px;
+    padding-top: 75px;
+    height: 100px;
+    line-height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 320px;
+}
+
+/* Left Icon */
+.quote-icon-left {
+    left: -40px;
+    font-size: 200px;
+    color: yellow;
+    background-color: #000000;
+    width: 100px;
+    height: 100px;
+    padding-top: 75px;
+    line-height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: -25px;
+
+}
+
+/* Right Icon */
+.quote-icon-right {
+    right: -25px;
+    bottom: 10px;
+    
+}
+
+/* Quote Text */
+.quote-text {
+    font-size: 18px;
+    color: white;
+    margin-top: 120px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="quote-card">
+            <div class="quote-icon-left">“</div>
+            <p class="quote-text">Your Confidence Is Hiding From You In The Work You’re Hiding From.</p>
+            <div class="quote-icon-right">”</div>
+        </div>
+        <div class="quote-card">
+            <div class="quote-icon-left">“</div>
+            <p class="quote-text">The Brightest Thing You Have To Give To The World Is The Healing Of Your Deepest, Darkest Struggles.</p>
+            <div class="quote-icon-right">”</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

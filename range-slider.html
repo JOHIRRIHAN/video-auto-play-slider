@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step-wise Range Slider</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+
+    .range-slider-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 750px;
+      height: 300px;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 50px;
+    }
+
+    .range-slider-holder {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .range-slider {
+      width: 100%;
+    }
+
+    .slider-value {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: -5px;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #043034;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .range-slider__actions {
+      margin-top: 50px;
+    }
+
+    .range-slider__btn {
+      padding: 23px 223px;
+      width: 100%;
+      background-color: #043034;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    .range-slider__btn:hover {
+      background-color: #043034;
+    }
+
+    /* Range slider background */
+.range-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;  /* Slider track height */
+  background: #043034; /* Set track background color */
+  border-radius: 5px; /* Optional: rounded corners */
+}
+
+/* Range slider fill */
+.range-slider::-webkit-slider-runnable-track {
+  height: 8px;
+  background: #bdbdbd; /* Set fill color */
+  border-radius: 5px;
+}
+
+.range-slider::-moz-range-track {
+  height: 8px;
+  background: #c2c2c2; /* Set fill color */
+  border-radius: 5px;
+}
+
+/* Range slider thumb (the handle) */
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #043034;  /* Handle color */
+  border-radius: 50%;
+  border: 2px solid #043034; /* Border color for handle */
+  cursor: pointer;
+}
+
+.range-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #043034;  /* Handle color */
+  border-radius: 50%;
+  border: 2px solid #043034; /* Border color for handle */
+  cursor: pointer;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="range-slider-box">
+    <h3>How much money do you need?</h3>
+    <div class="range-slider-holder">
+      <input type="range" id="slider" class="range-slider" min="0" max="9" value="0" step="1">
+      <div>
+
+      </div>
+      <div class="slider-value" id="sliderValue">$5,000 - $25,000</div>
+    </div>
+    <div class="range-slider__actions">
+      <a href="#" class="btn range-slider__btn">Get started</a>
+    </div>
+  </div>
+
+  <script>
+    // Define the range labels
+    const ranges = [
+      "$5,000 - $25,000",
+      "$25,000 - $50,000",
+      "$50,000 - $100,000",
+      "$100,000 - $250,000",
+      "$250,000 - $500,000",
+      "$500,000 - $1,000,000",
+      "$1,000,000 - $2,500,000",
+      "$2,500,000 - $5,000,000",
+      "$5,000,000 - $10,000,000",
+      "$10,000,000 - $20,000,000"
+    ];
+
+    const slider = document.getElementById('slider');
+    const sliderValue = document.getElementById('sliderValue');
+
+    // Function to update the position of the tooltip and text when the slider is moved
+    function updateSlider() {
+      const value = slider.value;
+      sliderValue.textContent = ranges[value];
+
+      // Position the tooltip above the slider handle
+      const sliderWidth = slider.offsetWidth;
+      const handleWidth = 20;  // Width of the slider handle
+      const position = (value / 9) * (sliderWidth - handleWidth);  // Adjust position based on slider value
+
+      sliderValue.style.left = `calc(${(position / sliderWidth) * 100}% - ${handleWidth / 2}px)`;
+    }
+
+    // Listen for input on the slider to update the tooltip
+    slider.addEventListener('input', updateSlider);
+
+    // Initialize the tooltip position and text
+    updateSlider();
+  </script>
+</body>
+</html>

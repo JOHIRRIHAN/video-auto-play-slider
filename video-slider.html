@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .unique-container {
+      padding: 0px 20px;
+    }
+
+    .unique-slider-container {
+      position: relative;
+      max-width: 1156px;
+      margin: auto;
+      overflow: hidden;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+
+    .unique-slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      cursor: grab;
+    }
+
+    .unique-slide {
+      flex: 0 0 calc(33.333%);
+      box-sizing: border-box;
+      transform: scale(0.9);
+      transition: transform 0.3s ease, z-index 0.3s ease;
+      z-index: 1;
+      position: relative;
+    }
+
+    .unique-slide.active {
+      transform: scale(1.09);
+      z-index: 2;
+      border: 2px solid white;
+      border-radius: 24px;
+    }
+
+    .unique-slide-inner {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .unique-slide video {
+      width: 100%;
+      display: none;
+      border-radius: 24px;
+      height: 500px;
+    }
+
+    .unique-slide .video-thumb {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+      border: 2px solid white;
+    }
+
+    .unique-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .unique-navigation-arrows {
+      font-size: 50px;
+      cursor: pointer;
+      user-select: none;
+      color: #333;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+    }
+
+    .unique-nav-left {
+      left: 0px;
+    }
+
+    .unique-nav-right {
+      right: 0px;
+    }
+
+    .unique-caption {
+      margin-top: -15px;
+      font-weight: bold;
+      color: black;
+      text-align: center;
+    }
+
+    .unique-dots {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .unique-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #F8A08B;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .unique-dot.active {
+      background: #DD4531;
+    }
+
+    .elementor-kit-7 button,
+    .elementor-kit-7 input[type="button"],
+    .elementor-kit-7 input[type="submit"],
+    .elementor-kit-7 .elementor-button {
+      font-family: "Brygada 1918", Sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      color: #FFFFFF;
+      background-color: transparent;
+      border-radius: 50%;
+      padding: 15px 20px 15px 20px;
+      border: 1px solid white;
+    }
+
+    .elementor-kit-7 button:hover,
+    .elementor-kit-7 input[type="button"]:hover,
+    .elementor-kit-7 input[type="submit"]:hover,
+    .elementor-kit-7 .elementor-button:hover {
+      background-color: transparent;
+      color: #fff;
+      border-color: #ffffff;
+    }
+
+    /* Desktop */
+    .unique-slide {
+      flex: 0 0 calc(33.333% - 20px);
+      margin: 0 10px;
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      .unique-slide {
+        flex: 0 0 calc(33.333%);
+      }
+    }
+
+    /* Mobile Styles (for small devices) */
+@media (max-width: 600px) {
+  .unique-navigation-arrows {
+    display: block; /* Show navigation arrows on mobile */
+  }
+
+  .unique-slide {
+    flex: 0 0 5%; /* Default width for non-active cards (left & right cards) */
+    transition: transform 0.3s ease;
+  }
+
+  .unique-slide.active {
+    flex: 0 0 70%; /* Active card takes 70% of the width */
+    transform: scale(1.03); /* Slightly scale the active card for emphasis */
+    z-index: 2; /* Bring the active card in front */
+  }
+}
+  </style>
+</head>
+
+<body>
+  <div class="unique-container">
+    <div class="unique-slider-container">
+      <div class="unique-navigation-arrows unique-nav-left" onclick="moveSlide(-1)">&#8592;</div>
+      <div class="unique-slider" id="unique-slider">
+        <!-- Slide 1 -->
+        <div class="unique-slide">
+          <div class="unique-slide-inner">
+            <img class="video-thumb"
+              src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/b4b636f5de0da82227585eef76fab286-1-scaled.jpg"
+              alt="Video 1">
+            <button class="unique-play-btn">▶</button>
+            <video src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/video.mp4" muted></video>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="unique-slide">
+          <div class="unique-slide-inner">
+            <img class="video-thumb"
+              src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/44f27d9bcc04cc4fbfb4d73db183f023.jpg"
+              alt="Video 2">
+            <button class="unique-play-btn">▶</button>
+            <video src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/video.mp4" muted></video>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="unique-slide">
+          <div class="unique-slide-inner">
+            <img class="video-thumb"
+              src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/419a668bf03abd042db5de40d79494bb-1.jpg"
+              alt="Video 3">
+            <button class="unique-play-btn">▶</button>
+            <video src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/video.mp4" muted></video>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="unique-slide">
+          <div class="unique-slide-inner">
+            <img class="video-thumb"
+              src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/44f27d9bcc04cc4fbfb4d73db183f023.jpg"
+              alt="Video 4">
+            <button class="unique-play-btn">▶</button>
+            <video src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/video.mp4" muted></video>
+          </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="unique-slide">
+          <div class="unique-slide-inner">
+            <img class="video-thumb"
+              src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/Frame-2147205605.png"
+              alt="Video 5">
+            <button class="unique-play-btn">▶</button>
+            <video src="https://suryavanshiventures.softvenceomega.com/wp-content/uploads/2025/03/video.mp4" muted></video>
+          </div>
+        </div>
+      </div>
+      <div class="unique-navigation-arrows unique-nav-right" onclick="moveSlide(1)">&#8594;</div>
+    </div>
+    <div class="unique-caption">Transformation by @jenniferjbeauty</div>
+    <div class="unique-dots" id="unique-dots"></div>
+  </div>
+
+  <script>
+    const slider = document.getElementById('unique-slider');
+    const slides = document.querySelectorAll('.unique-slide');
+    const dotsContainer = document.getElementById('unique-dots');
+    let currentSlide = 0;
+
+    // Function to update the position of the slider
+    function updateSliderPosition() {
+      const slideWidth = slides[0].offsetWidth + 20;
+      slider.style.transform = `translateX(-${slideWidth * currentSlide}px)`;
+
+      // Loop through each slide and set active class
+      slides.forEach((slide, i) => {
+        const video = slide.querySelector('video');
+        const thumb = slide.querySelector('.video-thumb');
+        const playBtn = slide.querySelector('.unique-play-btn');
+
+        if (i === currentSlide + 1) {
+          // Active slide
+          slide.classList.add('active');
+          thumb.style.display = 'none'; // Hide thumbnail
+          playBtn.style.display = 'none'; // Hide play button
+          video.style.display = 'block'; // Show video
+          video.play(); // Auto-play video
+
+          // Add event listener to move to the next slide when the video ends
+          video.addEventListener('ended', () => {
+            moveSlide(1); // Move to the next slide
+          });
+        } else {
+          // Non-active slides
+          slide.classList.remove('active');
+          thumb.style.display = 'block'; // Show thumbnail
+          playBtn.style.display = 'block'; // Show play button
+          video.style.display = 'none'; // Hide video
+          video.pause(); // Pause video
+        }
+      });
+    }
+
+    // Function to update the dots for navigation
+    function updateDots() {
+      dotsContainer.innerHTML = '';
+      const totalVisibleSlides = slides.length - 2;
+      for (let i = 0; i <= totalVisibleSlides; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('unique-dot');
+        if (i === currentSlide) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          currentSlide = i;
+          updateSliderPosition();
+          updateDots();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // Function to move the slider (next or previous)
+    function moveSlide(direction) {
+      const maxSlide = slides.length - 3;
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = maxSlide;
+      if (currentSlide > maxSlide) currentSlide = 0;
+      updateSliderPosition();
+      updateDots();
+    }
+
+    // Initialize slider
+    updateSliderPosition();
+    updateDots();
+  </script>
+</body>
+
+</html>
