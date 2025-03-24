@@ -15,5 +15,6 @@ This project implements a **continuous looping video slider** where the **middle
 1. **Clone the repository:**
 
    ```bash
-   git clone <repository-url>
-   cd <project-directory>
+   git clone https://github.com/JOHIRRIHAN/video-auto-play-slider.git
+   cd cd my-slider-project
+
